@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My YouTube Video</title>
+  <style>
+    #custom-video-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+    body {
+      background-color: #f1f1f1;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    #video-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      position: relative;
+    }
+
+    #my-video {
+      width: 80%;
+      max-width: 800px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    #video-controls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      padding: 5px;
+    }
+    #playpause-button {
+      padding: 5px;
+      background-color: transparent;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: opacity 0.3s;
+      position: relative;
+    }
+
+    #playpause-button:hover {
+      opacity: 0.7;
+    }
+
+    #playpause-button img {
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      transform: translate(50%, -50%);
+      transition: opacity 0.3s;
+    }
+
+    #playpause-button.playing img {
+      background-image: url('https://raw.githubusercontent.com/OLDYTWEBSITE/YOUTUBE.github.io/main/PausePlay.png');
+      background-position: 0px 0px;
+    }
+
+    #playpause-button.paused img {
+      background-image: url('https://raw.githubusercontent.com/OLDYTWEBSITE/YOUTUBE.github.io/main/PausePlay.png');
+      background-position: -300px -230px;
+    }
+
+    #playpause-text {
+      display: none;
+    }
+
+    #seek-bar {
+      width: 100%;
+      margin: 0 10px;
+    }
+
+    #mute-button {
+      padding: 5px;
+      background-color: transparent;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    #mute-button img {
+      width: 30px;
+      height: 30px;
+    }
+
+    #volume-bar {
+      width: 100%;
+      margin: 0 10px;
+    }
+
+    #fullscreen-button {
+      padding: 5px;
+      background-color: transparent;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    #fullscreen-button img {
+      width: 30px;
+      height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div id="video-container">
+    <video id="my-video">
+      <source id="video-source" src="" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div id="video-controls">
+      <button id="playpause-button" class="paused">
+        <img src="" alt="Play/Pause">
+        <span id="playpause-text">Play</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      // Get the URL of the website
+      var websiteUrl = window.location.href;
+      
+      // Extract the video name from the URL
+      var videoName = websiteUrl.split("/embed/")[1].split(".mp4")[0];
+      
+      // Create the video source URL
+      var videoSourceUrl = "https://" + websiteUrl + "/embed/" + videoName + ".mp4";
+      
+      // Set the video source
+      var videoSource = document.getElementById("video-source");
+      videoSource.setAttribute("src", videoSourceUrl);
+      
+// Load the video
+      var video = document.getElementById("my-video");
+      video.load();
+
+      // Play/pause button functionality
+      var playpauseButton = document.getElementById("playpause-button");
+      var playpauseText = document.getElementById("playpause-text");
+
+      playpauseButton.addEventListener("mouseenter", function() {
+        playpauseText.style.display = "block";
+      });
+
+      playpauseButton.addEventListener("mouseleave", function() {
+        playpauseText.style.display = "none";
+      });
+
+      playpauseButton.addEventListener("click", function() {
+        if (video.paused) {
+          video.play();
+          playpauseButton.classList.remove("paused");
+          playpauseButton.classList.add("playing");
+          playpauseText.textContent = "Pause";
+        } else {
+          video.pause();
+          playpauseButton.classList.remove("playing");
+          playpauseButton.classList.add("paused");
+          playpauseText.textContent = "Play";
+        }
+      });
+    });
+  </script>
+<div id="custom-video-controls">
+  <button id="playpause-button" class="paused">
+    <img src="" alt="Play/Pause">
+  </button>
+  <input type="range" id="seek-bar" min="0" max="100" value="0">
+  <button id="mute-button">
+    <img src="" alt="Mute/Unmute">
+  </button>
+  <input type="range" id="volume-bar" min="0" max="100" value="100">
+  <button id="fullscreen-button">
+    <img src="" alt="Fullscreen/Exit Fullscreen">
+  </button>
+</div>
+</body>
+</html>
